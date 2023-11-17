@@ -1,12 +1,39 @@
 import React from 'react';
 import './App.css';
+import styled from 'styled-components';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './components/Profile/Profile';
+
 
 function App() {
   return (
     <div className="App">
-     Hello, samurai! Let's go!
+      <GridWrapper>
+        <Header />
+        <Navbar />
+        <Profile />
+      </GridWrapper>
+
     </div>
   );
 }
 
 export default App;
+
+
+const GridWrapper = styled.div`
+  display: grid;
+  grid-template-areas: 
+  "header header"
+  "nav main";
+  grid-template-columns: 1fr 11fr;
+  grid-template-rows: 2fr 10fr;
+  grid-gap: 10px;
+`
+
+
+
+
+
+
