@@ -3,27 +3,18 @@ import { NavLink } from 'react-router-dom';
 import { S } from './Dialogs.module';
 import { DialogsItem } from './DialogsItem/DialogsItem';
 import { Messages } from './Messages/Messages';
+import {PropsType} from './../../App';
 
-export const Dialogs = () => {
 
-    let dialogs = [
-        {id: 1, name: 'Dima'},
-        {id: 2, name: 'Vika'},
-        {id: 3, name: 'Alina'},
-        {id: 4, name: 'Vasia'},
-        {id: 5, name: 'Masha'},
-    ]
-    
-    let messages = [
-        {id: 1, message: 'Lorem ipsum dolor sit amet.'},
-        {id: 2, message: 'Lorem ipsum dolor sit amet consectetur'},
-        {id: 3, message: 'Lorem ipsum dolor sit amet consectetur'},
-        {id: 4, message: 'Lorem ipsum dolor sit.'},
-    ]
 
-    const dialogsElements = dialogs.map((user => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
 
-    const messagesElements = messages.map((text) => <Messages key={text.id} id={text.id} messages={text.message}/>)
+
+export const Dialogs = (props:PropsType) => {
+
+    const dialogsElements = props.dialogs.map((user => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
+
+    const messagesElements = props.messages.map((text) => <Messages key={text.id} id={text.id} messages={text.message}/>)
+
 
     return (
         <S.DialogsWrapper>

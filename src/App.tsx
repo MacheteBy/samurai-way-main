@@ -11,8 +11,23 @@ import { Settings } from './components/Settings/Settings';
 import { Navbar } from './components/Navbar/Navbar';
 
 
+export type dialogsType = {
+  id: number,
+  name: string,
+}
 
-function App() {
+export type messagesType = {
+  id: number,
+  message: string,
+}
+
+export type PropsType = {
+  dialogs: dialogsType[],
+  messages: messagesType[],
+}
+
+
+function App(props:PropsType) {
   return (
     <BrowserRouter>
       <div className="App">
@@ -20,7 +35,7 @@ function App() {
           <Header />
           <Navbar />
           <div>
-            <Route path='/messages' component={Dialogs} />
+            <Route path='/messages' render={() => <Dialogs dialogs={props.dialogs} messages={props.messages}/>} />
             <Route path='/profile' component={Profile} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
