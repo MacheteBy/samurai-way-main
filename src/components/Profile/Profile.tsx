@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Profile = () => {
+export const Profile = () => {
     return (
         <MainStyled>
           <MainImages></MainImages>
@@ -27,8 +27,6 @@ const Profile = () => {
         </MainStyled>
     );
 };
-
-export default Profile;
 
 
 const MainStyled = styled.section`

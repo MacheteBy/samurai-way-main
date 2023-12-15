@@ -1,25 +1,20 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { S } from './Navbar.module'
 
-const Navbar = () => {
-    return (
-        <NavigationStyled>
-          <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Messages</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="#">Music</a></li>
-            <li><a href="#">Settings</a></li>
-          </ul>
-        </NavigationStyled>
-    );
+export const Navbar = () => {
+  return (
+    <S.NavigationStyled>
+      <ul>
+        <li><NavLink to="/profile" activeClassName={'active'}>Profile</NavLink></li>
+        <li><NavLink to="/messages" activeClassName={'active'}>Messages</NavLink></li>
+        <li><NavLink to="/news" activeClassName={'active'}>News</NavLink></li>
+        <li><NavLink to="/music" activeClassName={'active'}>Music</NavLink></li>
+        <li><NavLink to="/settings" activeClassName={'active'}>Settings</NavLink></li>
+      </ul>
+    </S.NavigationStyled>
+  );
 };
 
-export default Navbar;
 
-
-
-const NavigationStyled = styled.nav`
-grid-area: nav;
-  background-color: #beca0e;
-`
