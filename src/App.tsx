@@ -9,21 +9,21 @@ import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import { Navbar } from './components/Navbar/Navbar';
+import { RootStateType } from './redux/state';
 
 
-export type dialogsType = {
-  id: number,
-  name: string,
-}
+// export type dialogsType = {
+//   id: number,
+//   name: string,
+// }
 
-export type messagesType = {
-  id: number,
-  message: string,
-}
+// export type messagesType = {
+//   id: number,
+//   message: string,
+// }
 
 export type PropsType = {
-  dialogs: dialogsType[],
-  messages: messagesType[],
+  state: RootStateType,
 }
 
 
@@ -35,7 +35,7 @@ function App(props:PropsType) {
           <Header />
           <Navbar />
           <div>
-            <Route path='/messages' render={() => <Dialogs dialogs={props.dialogs} messages={props.messages}/>} />
+            <Route path='/messages' render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>} />
             <Route path='/profile' component={Profile} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
