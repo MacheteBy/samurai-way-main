@@ -1,9 +1,11 @@
 export type RootStateType = {
     dialogsPage: DialogsPageType,
+    postPage: PostPageType,
+    navbarFriends: VavbarFriendsType,
 }
 
 
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: DialogType[],
     messages: MessageType[],
 }
@@ -18,8 +20,27 @@ type DialogType = {
     name: string,
 }
 
+export type PostPageType = {
+    post: PostsType[]
+}
 
-let state:RootStateType = {
+type PostsType = {
+    id: number, 
+    postText: string, 
+    like: number,
+}
+
+export type VavbarFriendsType = {
+    friends: FriendsType[],
+}
+
+type FriendsType = {
+    id: number, 
+    name: string,
+}
+
+
+let state: RootStateType = {
     dialogsPage: {
         dialogs: [
             { id: 1, name: 'Dima' },
@@ -33,6 +54,20 @@ let state:RootStateType = {
             { id: 2, message: 'Lorem ipsum dolor sit amet consectetur' },
             { id: 3, message: 'Lorem ipsum dolor sit amet consectetur' },
             { id: 4, message: 'Lorem ipsum dolor sit.' },
+        ],
+    },
+    postPage: {
+        post: [
+            {id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12},
+            {id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28},
+            {id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89},
+        ]
+    },
+    navbarFriends: {
+        friends: [
+            {id: 1, name: 'Alex'},
+            {id: 2, name: 'Max'},
+            {id: 3, name: 'Roma'},
         ]
     }
 }

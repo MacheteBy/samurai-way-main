@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { PostPageType } from '../../redux/state';
+import { Post } from './Post/Post';
 
-export const Profile = () => {
+type Profiletype = {
+  postPage: PostPageType,
+}
+
+
+
+export const Profile = (props: Profiletype) => {
     return (
         <MainStyled>
           <MainImages></MainImages>
@@ -19,10 +27,7 @@ export const Profile = () => {
               <input type="text" />
               <button>Send</button>
             </NewPosts>
-            <PostsList>
-              <img src="" alt="" />
-              <p>Post 1</p>
-            </PostsList>
+            <Post postPage={props.postPage}/>
           </MyPosts>
         </MainStyled>
     );
@@ -56,9 +61,5 @@ const MyPosts = styled.div`
 `
 
 const NewPosts = styled.div`
-  
-`
-
-const PostsList = styled.div`
   
 `

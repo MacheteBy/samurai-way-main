@@ -4,14 +4,13 @@ import { S } from './Dialogs.module';
 import { DialogsItem } from './DialogsItem/DialogsItem';
 import { Messages } from './Messages/Messages';
 import {PropsType} from './../../App';
-import { RootStateType } from '../../redux/state';
+import { DialogsPageType, RootStateType } from '../../redux/state';
 
+type DialogsType = {
+    dialogsPage: DialogsPageType
+}
 
-
-
-
-
-export const Dialogs = (props:RootStateType) => {
+export const Dialogs = (props: DialogsType) => {
 
     const dialogsElements = props.dialogsPage.dialogs.map((user => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
 
