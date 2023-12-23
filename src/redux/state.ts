@@ -72,4 +72,12 @@ let state: RootStateType = {
     }
 }
 
+export const addPost = (postMessage: string) => {
+    let newId = state.postPage.post.length+1
+    let newPost = {id: newId, postText: postMessage, like: 0}
+    state.postPage.post.push(newPost)
+    console.log(state.postPage.post)
+}
+
+
 export default state;

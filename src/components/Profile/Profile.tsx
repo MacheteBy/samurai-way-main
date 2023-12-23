@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PostPageType } from '../../redux/state';
+import { NewPost } from './NewPost/NewPost';
 import { Post } from './Post/Post';
 
 type Profiletype = {
   postPage: PostPageType,
+  addPost: (postMessage: string) => void;
 }
 
 
@@ -23,10 +25,7 @@ export const Profile = (props: Profiletype) => {
             </MyInfoBlock>
           </MyInfo>
           <MyPosts>
-            <NewPosts>
-              <input type="text" />
-              <button>Send</button>
-            </NewPosts>
+            <NewPost addPost={props.addPost}/>
             <Post postPage={props.postPage}/>
           </MyPosts>
         </MainStyled>
@@ -57,9 +56,5 @@ const MyInfoBlock = styled.div`
 `
 
 const MyPosts = styled.div`
-  
-`
-
-const NewPosts = styled.div`
   
 `
