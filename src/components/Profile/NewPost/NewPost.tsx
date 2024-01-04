@@ -15,11 +15,12 @@ export const NewPost = (props: NewPostType) => {
 
     const onClickhandler = () => {
         props.addPost(inputValue)
+        setInputTitle('')
     }
 
     return (
         <NewPosts>
-            <input onChange={newPostElement} type="text" />
+            <input value={inputValue} onChange={newPostElement} type="text" />
             <button onClick={onClickhandler}>Send</button>
         </NewPosts>
     );
