@@ -1,4 +1,10 @@
-import { rerenderEntireTree } from "../render"
+let rerenderEntireTree = () => {
+    console.log('State changed')
+}
+
+// rerenderEntireTree = () => {
+//     //
+// }
 
 export type RootStateType = {
     dialogsPage: DialogsPageType,
@@ -78,8 +84,13 @@ export const addPost = (postMessage: string) => {
     let newId = state.postPage.post.length+1
     let newPost = {id: newId, postText: postMessage, like: 0}
     state.postPage.post.push(newPost)
-    rerenderEntireTree(state)
+    rerenderEntireTree()
+    console.log(state)
 }
 
+
+export const subscribe = (callback: () => void) => {
+    rerenderEntireTree = callback
+}
 
 export default state;
