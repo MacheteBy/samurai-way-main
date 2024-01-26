@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
+import { AddPostActionType } from '../../../redux/state';
 
 type NewPostType = {
-    addPost: (postMessage: string) => void;
+    dispatch: (action: AddPostActionType) => void;
 }
 
 export const NewPost = (props: NewPostType) => {
@@ -14,7 +15,8 @@ export const NewPost = (props: NewPostType) => {
     }
 
     const onClickhandler = () => {
-        props.addPost(inputValue)
+        let action = {type: 'ADD-POST', postMessage: inputValue}
+        props.dispatch(action)
         setInputTitle('')
     }
 

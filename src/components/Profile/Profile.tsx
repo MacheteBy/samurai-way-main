@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PostPageType } from '../../redux/state';
+import { AddPostActionType, PostPageType } from '../../redux/state';
 import { NewPost } from './NewPost/NewPost';
 import { Post } from './Post/Post';
 
 type Profiletype = {
   postPage: PostPageType,
-  addPost: (postMessage: string) => void;
+  dispatch: (action: AddPostActionType) => void;
 }
 
 
@@ -25,7 +25,7 @@ export const Profile = (props: Profiletype) => {
             </MyInfoBlock>
           </MyInfo>
           <MyPosts>
-            <NewPost addPost={props.addPost}/>
+            <NewPost dispatch={props.dispatch}/>
             <Post postPage={props.postPage}/>
           </MyPosts>
         </MainStyled>

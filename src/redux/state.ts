@@ -16,12 +16,12 @@ export type DialogsPageType = {
 }
 
 type MessageType = {
-    id: number, 
+    id: number,
     message: string,
 }
 
 type DialogType = {
-    id: number, 
+    id: number,
     name: string,
 }
 
@@ -30,8 +30,8 @@ export type PostPageType = {
 }
 
 type PostsType = {
-    id: number, 
-    postText: string, 
+    id: number,
+    postText: string,
     like: number,
 }
 
@@ -40,12 +40,26 @@ export type VavbarFriendsType = {
 }
 
 type FriendsType = {
-    id: number, 
+    id: number,
     name: string,
 }
 
+export type StoryType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    rerenderEntireTree: () => void
+    addPost: (postMessage: string) => void
+    subscribe: (callback: () => void) => void
+    dispatch: (action: AddPostActionType) => void
+}
 
-let store = {
+export type AddPostActionType = {
+    type: string
+    postMessage: string
+}
+
+
+let store: StoryType = {
     _state: {
         dialogsPage: {
             dialogs: [
@@ -64,34 +78,43 @@ let store = {
         },
         postPage: {
             post: [
-                {id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12},
-                {id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28},
-                {id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89},
+                { id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12 },
+                { id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28 },
+                { id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89 },
             ]
         },
         navbarFriends: {
             friends: [
-                {id: 1, name: 'Alex'},
-                {id: 2, name: 'Max'},
-                {id: 3, name: 'Roma'},
+                { id: 1, name: 'Alex' },
+                { id: 2, name: 'Max' },
+                { id: 3, name: 'Roma' },
             ]
         }
     },
-    getState(){
+    getState() {
         return this._state
     },
     rerenderEntireTree() {
         console.log('State changed')
     },
     addPost(postMessage: string) {
-        let newId = store._state.postPage.post.length+1
-        let newPost = {id: newId, postText: postMessage, like: 0}
+        let newId = store._state.postPage.post.length + 1
+        let newPost = { id: newId, postText: postMessage, like: 0 }
         store._state.postPage.post.push(newPost)
         store.rerenderEntireTree()
         console.log(store)
     },
     subscribe(callback: () => void) {
         store.rerenderEntireTree = callback
+    },
+    dispatch(action: any) {
+        if (action === 'ADD-POST') {
+            let newId = store._state.postPage.post.length + 1
+            let newPost = { id: newId, postText: action.postMessage, like: 0 }
+            store._state.postPage.post.push(newPost)
+            store.rerenderEntireTree()
+            console.log(store)
+        }
     }
 }
 
