@@ -15,7 +15,9 @@ export const NewPost = (props: NewPostType) => {
     }
 
     const onClickhandler = () => {
-        let action = {type: 'ADD-POST', postMessage: inputValue}
+        let action = {type: 'ADD-POST', postMessage: inputValue} as const
+        console.log(action)
+        console.log(props)
         props.dispatch(action)
         setInputTitle('')
     }

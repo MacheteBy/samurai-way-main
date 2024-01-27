@@ -54,7 +54,7 @@ export type StoryType = {
 }
 
 export type AddPostActionType = {
-    type: string
+    type: 'ADD-POST' 
     postMessage: string
 }
 
@@ -108,7 +108,10 @@ let store: StoryType = {
         store.rerenderEntireTree = callback
     },
     dispatch(action: any) {
-        if (action === 'ADD-POST') {
+        console.log('sdcsdcsdc')
+          console.log(action)
+        if (action.type === 'ADD-POST') {
+            console.log('sdcsdcsdc')
             let newId = store._state.postPage.post.length + 1
             let newPost = { id: newId, postText: action.postMessage, like: 0 }
             store._state.postPage.post.push(newPost)
