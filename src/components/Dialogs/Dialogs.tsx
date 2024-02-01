@@ -2,10 +2,12 @@ import React, { ChangeEvent, useState } from 'react';
 import { S } from './Dialogs.module';
 import { DialogsItem } from './DialogsItem/DialogsItem';
 import { Messages } from './Messages/Messages';
-import { DialogsPageType } from '../../redux/state';
+import { DialogsPageType, dispatchType } from '../../redux/state';
+import { AddMessageActionCreator } from '../../redux/dialogs-reducer';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
+    dispatch: (action: dispatchType) => void;
 }
 
 export const Dialogs = (props: DialogsType) => {
@@ -23,7 +25,9 @@ export const Dialogs = (props: DialogsType) => {
 
 
     const onClickHandler =() => {
-        alert(message)
+        let action = AddMessageActionCreator(message)
+        props.dispatch(action)
+        setMessage('')
     }
 
     return (
@@ -39,7 +43,7 @@ export const Dialogs = (props: DialogsType) => {
                 </div>
             </S.DialogsMembersMessages>
             <div>
-                <input onChange={onChangeHandler} type="text" />
+                <input value={message} onChange={onChangeHandler} type="text" />
                 <button onClick={onClickHandler}>Add Message</button>
             </div>
         </S.DialogsWrapper>

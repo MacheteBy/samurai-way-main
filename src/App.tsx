@@ -9,13 +9,13 @@ import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import { Navbar } from './components/Navbar/Navbar';
-import { AddPostActionType, RootStateType } from './redux/state';
+import { dispatchType, RootStateType } from './redux/state';
 
 
 
 export type PropsType = {
   state: RootStateType,
-  dispatch: (action: AddPostActionType) => void;
+  dispatch: (action: dispatchType) => void;
 }
 
 
@@ -27,7 +27,7 @@ function App(props:PropsType) {
           <Header />
           <Navbar navbarFriends={props.state.navbarFriends}/>
           <div>
-            <Route path='/messages' render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>} />
+            <Route path='/messages' render={() => <Dialogs dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>} />
             <Route path='/profile' render={() => <Profile  postPage={props.state.postPage} dispatch={props.dispatch}/>} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />

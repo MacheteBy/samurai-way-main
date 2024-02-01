@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AddPostActionType, PostPageType } from '../../redux/state';
+import {  dispatchType, PostPageType } from '../../redux/state';
 import { NewPost } from './NewPost/NewPost';
 import { Post } from './Post/Post';
 
 type Profiletype = {
   postPage: PostPageType,
-  dispatch: (action: AddPostActionType) => void;
+  dispatch: (action: dispatchType) => void;
 }
 
 

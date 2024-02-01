@@ -1,6 +1,5 @@
-// let rerenderEntireTree = () => {
-//     console.log('State changed')
-// }
+import dialogsReducer, { addMessage, AddMessageActionCreator } from "./dialogs-reducer"
+import profileReducer, { addPost, AddPostActionCreator } from "./profile-reducer"
 
 
 export type RootStateType = {
@@ -29,7 +28,7 @@ export type PostPageType = {
     post: PostsType[]
 }
 
-type PostsType = {
+export type PostsType = {
     id: number,
     postText: string,
     like: number,
@@ -48,15 +47,15 @@ export type StoryType = {
     _state: RootStateType
     getState: () => RootStateType
     rerenderEntireTree: () => void
-    addPost: (postMessage: string) => void
+    // addPost: (postMessage: string) => void
     subscribe: (callback: () => void) => void
-    dispatch: (action: AddPostActionType) => void
+    dispatch: (action: dispatchType) => void
 }
 
-export type AddPostActionType = {
-    type: 'ADD-POST' 
-    postMessage: string
-}
+export type dispatchType = AddPostActionType | AddMessageActionType
+
+export type AddPostActionType = ReturnType<typeof AddPostActionCreator>
+export type AddMessageActionType = ReturnType<typeof AddMessageActionCreator>
 
 
 let store: StoryType = {
@@ -81,7 +80,7 @@ let store: StoryType = {
                 { id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12 },
                 { id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28 },
                 { id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89 },
-            ]
+            ],
         },
         navbarFriends: {
             friends: [
@@ -97,73 +96,24 @@ let store: StoryType = {
     rerenderEntireTree() {
         console.log('State changed')
     },
-    addPost(postMessage: string) {
-        let newId = store._state.postPage.post.length + 1
-        let newPost = { id: newId, postText: postMessage, like: 0 }
-        store._state.postPage.post.push(newPost)
-        store.rerenderEntireTree()
-        console.log(store)
-    },
+    // addPost(postMessage: string) {
+    //     let newId = store._state.postPage.post.length + 1
+    //     let newPost = { id: newId, postText: postMessage, like: 0 }
+    //     store._state.postPage.post.push(newPost)
+    //     store.rerenderEntireTree()
+    //     console.log(store)
+    // },
     subscribe(callback: () => void) {
         store.rerenderEntireTree = callback
     },
-    dispatch(action: any) {
-        console.log('sdcsdcsdc')
-          console.log(action)
-        if (action.type === 'ADD-POST') {
-            console.log('sdcsdcsdc')
-            let newId = store._state.postPage.post.length + 1
-            let newPost = { id: newId, postText: action.postMessage, like: 0 }
-            store._state.postPage.post.push(newPost)
-            store.rerenderEntireTree()
-            console.log(store)
-        }
+    dispatch(action) {
+        store._state.dialogsPage.messages = dialogsReducer(store._state.dialogsPage.messages, action);
+        store._state.postPage.post = profileReducer(store._state.postPage.post, action)
+        this.rerenderEntireTree()
     }
 }
 
-// let state: RootStateType = {
-//     dialogsPage: {
-//         dialogs: [
-//             { id: 1, name: 'Dima' },
-//             { id: 2, name: 'Vika' },
-//             { id: 3, name: 'Alina' },
-//             { id: 4, name: 'Vasia' },
-//             { id: 5, name: 'Masha' },
-//         ],
-//         messages: [
-//             { id: 1, message: 'Lorem ipsum dolor sit amet.' },
-//             { id: 2, message: 'Lorem ipsum dolor sit amet consectetur' },
-//             { id: 3, message: 'Lorem ipsum dolor sit amet consectetur' },
-//             { id: 4, message: 'Lorem ipsum dolor sit.' },
-//         ],
-//     },
-//     postPage: {
-//         post: [
-//             {id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12},
-//             {id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28},
-//             {id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89},
-//         ]
-//     },
-//     navbarFriends: {
-//         friends: [
-//             {id: 1, name: 'Alex'},
-//             {id: 2, name: 'Max'},
-//             {id: 3, name: 'Roma'},
-//         ]
-//     }
-// }
-
-// export const addPost = (postMessage: string) => {
-//     let newId = state.postPage.post.length+1
-//     let newPost = {id: newId, postText: postMessage, like: 0}
-//     state.postPage.post.push(newPost)
-//     rerenderEntireTree()
-//     console.log(state)
-// }
 
 
-// export const subscribe = (callback: () => void) => {
-//     rerenderEntireTree = callback
-// }
 
 export default store;

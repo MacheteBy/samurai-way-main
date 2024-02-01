@@ -1,10 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import { AddPostActionType } from '../../../redux/state';
+import { AddPostActionCreator } from '../../../redux/profile-reducer';
+import { dispatchType } from '../../../redux/state';
 
 type NewPostType = {
-    dispatch: (action: AddPostActionType) => void;
+    dispatch: (action: dispatchType) => void;
 }
+
+
 
 export const NewPost = (props: NewPostType) => {
     let [inputValue, setInputTitle] = useState('')
@@ -15,9 +18,7 @@ export const NewPost = (props: NewPostType) => {
     }
 
     const onClickhandler = () => {
-        let action = {type: 'ADD-POST', postMessage: inputValue} as const
-        console.log(action)
-        console.log(props)
+        let action = AddPostActionCreator(inputValue)
         props.dispatch(action)
         setInputTitle('')
     }
