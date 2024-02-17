@@ -1,20 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { AppStateType } from '../../../redux/redux-store';
 import { VavbarFriendsType } from '../../../redux/state';
 import { Friend } from './Friend/Friend';
 
-type FriendsType = {
-    navbarFriends: VavbarFriendsType,
-}
 
-
-
-export const Friends = (props: FriendsType) => {
+export const Friends = () => {
+    let friends = useSelector<AppStateType, any>(state => state.navbarFriends)
     return (
         <FriendsWrapper>
             <FriendsTitle>Friends</FriendsTitle>
             <FriendBlockWrap>
-                <Friend navbarFriends={props.navbarFriends}/>
+                <Friend navbarFriends={friends}/>
             </FriendBlockWrap>
         </FriendsWrapper>
     );

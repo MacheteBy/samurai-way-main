@@ -4,19 +4,34 @@ import { DialogsItem } from './DialogsItem/DialogsItem';
 import { Messages } from './Messages/Messages';
 import { DialogsPageType, dispatchType } from '../../redux/state';
 import { AddMessageActionCreator } from '../../redux/dialogs-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
+
+// type DialogsType = {
+//     dialogsPage: DialogsPageType
+//     dispatch: (action: dispatchType) => void;
+// }
 
 type DialogsType = {
-    dialogsPage: DialogsPageType
-    dispatch: (action: dispatchType) => void;
+    id: number 
+    name: string
 }
 
-export const Dialogs = (props: DialogsType) => {
+type MessagesType = {
+    id: number 
+    message: string
+}
+
+
+export const Dialogs = () => {
 
     let [message, setMessage] = useState('')
+    let dialogsPage = useSelector<AppStateType, any>(state => state.dialogsPage)
+    let dispatch = useDispatch()
 
-    const dialogsElements = props.dialogsPage.dialogs.map((user => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
+    const dialogsElements = dialogsPage.dialogs.map(((user: DialogsType) => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
 
-    const messagesElements = props.dialogsPage.messages.map((text) => <Messages key={text.id} id={text.id} messages={text.message}/>)
+    const messagesElements = dialogsPage.messages.map((text: MessagesType) => <Messages key={text.id} id={text.id} messages={text.message}/>)
 
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +40,7 @@ export const Dialogs = (props: DialogsType) => {
 
 
     const onClickHandler =() => {
-        let action = AddMessageActionCreator(message)
-        props.dispatch(action)
+        dispatch(AddMessageActionCreator(message))
         setMessage('')
     }
 

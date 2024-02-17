@@ -6,11 +6,9 @@ import { Friends } from './Friends/Friends';
 import { S } from './Navbar.module'
 
 
-type NavbarType = {
-  navbarFriends: VavbarFriendsType,
-}
 
-export const Navbar = (props: NavbarType) => {
+
+export const Navbar = () => {
   return (
     <S.NavigationStyled>
       <ul>
@@ -20,7 +18,8 @@ export const Navbar = (props: NavbarType) => {
         <li><NavLink to="/music" activeClassName={'active'}>Music</NavLink></li>
         <li><NavLink to="/settings" activeClassName={'active'}>Settings</NavLink></li>
       </ul>
-      <Friends navbarFriends={props.navbarFriends}/>
+      {/* <Friends navbarFriends={props.navbarFriends}/> */}
+      <Friends/>
     </S.NavigationStyled>
   );
 };

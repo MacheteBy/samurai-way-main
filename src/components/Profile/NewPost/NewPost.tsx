@@ -1,6 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { AddMessageActionCreator } from '../../../redux/dialogs-reducer';
 import { AddPostActionCreator } from '../../../redux/profile-reducer';
+import { AppStateType } from '../../../redux/redux-store';
 import { dispatchType } from '../../../redux/state';
 
 type NewPostType = {
@@ -18,10 +21,9 @@ export const NewPost = (props: NewPostType) => {
     }
 
     const onClickhandler = () => {
-        let action = AddPostActionCreator(inputValue)
-        props.dispatch(action)
+        props.dispatch(AddPostActionCreator(inputValue))
         setInputTitle('')
-    }
+    } 
 
     return (
         <NewPosts>

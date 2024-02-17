@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { AppStateType } from '../../../redux/redux-store';
 import { PostPageType } from '../../../redux/state';
 
 type PostType = {
@@ -7,7 +9,9 @@ type PostType = {
 }
 
 export const Post = (props: PostType) => {
-    const PostElement = props.postPage.post.map((el => 
+
+
+    const PostElement = props.postPage.post.map(((el: any) => 
         <PostsList key={el.id}>
             <PostImg src="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" alt="icon" />
             <PostText>{el.postText}</PostText>

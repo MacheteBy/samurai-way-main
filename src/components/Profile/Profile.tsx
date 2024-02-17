@@ -1,17 +1,15 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {  dispatchType, PostPageType } from '../../redux/state';
+import { AppStateType } from '../../redux/redux-store';
 import { NewPost } from './NewPost/NewPost';
 import { Post } from './Post/Post';
 
-type Profiletype = {
-  postPage: PostPageType,
-  dispatch: (action: dispatchType) => void;
-}
+export const Profile = () => {
 
+  let postPage = useSelector<AppStateType, any>(state => state.postPage)
+  let dispatch = useDispatch()
 
-
-export const Profile = (props: Profiletype) => {
     return (
         <MainStyled>
           <MainImages></MainImages>
@@ -25,8 +23,8 @@ export const Profile = (props: Profiletype) => {
             </MyInfoBlock>
           </MyInfo>
           <MyPosts>
-            <NewPost dispatch={props.dispatch}/>
-            <Post postPage={props.postPage}/>
+            <NewPost dispatch={dispatch}/>
+            <Post postPage={postPage}/>
           </MyPosts>
         </MainStyled>
     );
@@ -48,7 +46,7 @@ const MyInfo = styled.div`
 
 const Photo = styled.img`
   height: 300px;
-  width: 100vw;
+  width: 90vw;
 `
 
 const MyInfoBlock = styled.div`

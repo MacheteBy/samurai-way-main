@@ -2,14 +2,21 @@ import { dispatchType } from "./state"
 
 export const addPost = 'ADD-POST'
 
-const profileReducer = (state: any, action: dispatchType) => {
+let initialState = {
+    post: [
+        { id: 1, postText: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', like: 12 },
+        { id: 2, postText: 'Lorem ipsum, dolor sit amet consectetur', like: 28 },
+        { id: 3, postText: 'Lorem ipsum, dolor sit amet', like: 89 },
+    ],
+}
+
+const profileReducer = (state: any = initialState, action: dispatchType) => {
 
     if (action.type === addPost) {
         console.log('ADD-POST')
-        let newId = state.length + 1
+        let newId = state.post.length + 1
         let newPost = { id: newId, postText: action.inputValue, like: 0 }
-        state.push(newPost)
-        // return [...state, newPost]
+        return {...state, post:[...state.post, newPost]}
     }
 
     return state;
