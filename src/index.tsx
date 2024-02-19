@@ -7,19 +7,19 @@ import App from './App';
 import { Provider } from 'react-redux';
 
 
-const rerenderEntireTree = () => {
+// const rerenderEntireTree = () => {
     ReactDOM.render(
         <Provider store={store}>
-            <App />
+            <App /> 
         </Provider>
         ,
         document.getElementById('root')
     );
-}
+// }
 
 
 
 
-rerenderEntireTree();
+// rerenderEntireTree();
 
-store.subscribe(rerenderEntireTree);
+// store.subscribe(rerenderEntireTree);

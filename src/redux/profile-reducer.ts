@@ -11,15 +11,16 @@ let initialState = {
 }
 
 const profileReducer = (state: any = initialState, action: dispatchType) => {
-
-    if (action.type === addPost) {
-        console.log('ADD-POST')
-        let newId = state.post.length + 1
-        let newPost = { id: newId, postText: action.inputValue, like: 0 }
-        return {...state, post:[...state.post, newPost]}
+    switch (action.type) {
+        case addPost: {
+            console.log(addPost)
+            let newId = state.post.length + 1
+            let newPost = { id: newId, postText: action.inputValue, like: 0 }
+            return { ...state, post: [...state.post, newPost] }
+        }
+        default:
+            return state
     }
-
-    return state;
 }
 
 export let AddPostActionCreator = (inputValue: string) =>
