@@ -14,6 +14,7 @@ export const Navbar = () => {
       <ul>
         <li><NavLink to="/profile" activeClassName={'active'}>Profile</NavLink></li>
         <li><NavLink to="/messages" activeClassName={'active'}>Messages</NavLink></li>
+        <li><NavLink to="/users" activeClassName={'active'}>Users</NavLink></li>
         <li><NavLink to="/news" activeClassName={'active'}>News</NavLink></li>
         <li><NavLink to="/music" activeClassName={'active'}>Music</NavLink></li>
         <li><NavLink to="/settings" activeClassName={'active'}>Settings</NavLink></li>

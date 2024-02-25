@@ -9,6 +9,7 @@ import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import { Navbar } from './components/Navbar/Navbar';
+import Users from './components/Users/Users';
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <div>
             <Route path='/messages' render={() => <Dialogs/>} />
             <Route path='/profile' render={() => <Profile/>} />
+            <Route path='/users' component={Users} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
             <Route path='/settings' component={Settings} />
@@ -44,6 +46,7 @@ grid-template-areas:
 grid-template-columns: 1fr 11fr;
 grid-template-rows: 2fr 10fr;
 grid-gap: 10px;
+background-color: #3f3f3f89;
 `
 
 
