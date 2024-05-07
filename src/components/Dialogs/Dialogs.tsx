@@ -6,6 +6,9 @@ import { DialogsPageType, dispatchType } from '../../redux/state';
 import { AddMessageActionCreator } from '../../redux/dialogs-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
+import { Redirect } from 'react-router-dom';
+import DialogsForm, { DialogsFormType } from './DialogsForm';
+import { reduxForm } from 'redux-form';
 
 // type DialogsType = {
 //     dialogsPage: DialogsPageType
@@ -25,8 +28,9 @@ type MessagesType = {
 
 export const Dialogs = () => {
 
-    let [message, setMessage] = useState('')
+    // let [message, setMessage] = useState('')
     let dialogsPage = useSelector<AppStateType, any>(state => state.dialogsPage)
+    let isInited = useSelector<AppStateType, any>(state => state.auth.isInited)
     let dispatch = useDispatch()
 
     const dialogsElements = dialogsPage.dialogs.map(((user: DialogsType) => <DialogsItem key={user.id} id={user.id} name={user.name}/>))
@@ -34,15 +38,28 @@ export const Dialogs = () => {
     const messagesElements = dialogsPage.messages.map((text: MessagesType) => <Messages key={text.id} id={text.id} messages={text.message}/>)
 
 
-    const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        setMessage(e.currentTarget.value)
-    }
+    // const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     setMessage(e.currentTarget.value)
+    // }
 
 
-    const onClickHandler =() => {
-        dispatch(AddMessageActionCreator(message))
-        setMessage('')
+    // const onClickHandler =() => {
+    //     dispatch(AddMessageActionCreator(message))
+    //     setMessage('')
+    // }
+
+    if(isInited === false) {
+        return <Redirect to={'/login'}/>
     }
+
+    const DialogReduxForm = reduxForm<DialogsFormType>({form: 'message'})(DialogsForm)
+
+    const onSubmit = (formData: DialogsFormType) => {
+        console.log(formData)
+        dispatch(AddMessageActionCreator(formData.message))
+
+    }
+
 
     return (
         <S.DialogsWrapper>
@@ -56,10 +73,7 @@ export const Dialogs = () => {
                     {messagesElements}
                 </div>
             </S.DialogsMembersMessages>
-            <div>
-                <input value={message} onChange={onChangeHandler} type="text" />
-                <button onClick={onClickHandler}>Add Message</button>
-            </div>
+            <DialogReduxForm onSubmit={onSubmit}/>
         </S.DialogsWrapper>
     );
 };

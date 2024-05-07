@@ -1,5 +1,5 @@
-import dialogsReducer, { addMessage, AddMessageActionCreator } from "./dialogs-reducer"
-import profileReducer, { addPost, AddPostActionCreator } from "./profile-reducer"
+import dialogsReducer, { AddMessageActionCreator } from "./dialogs-reducer"
+import profileReducer, { AddPostActionCreator } from "./profile-reducer"
 
 
 export type RootStateType = {
@@ -108,7 +108,7 @@ let store: StoryType = {
     },
     dispatch(action) {
         store._state.dialogsPage.messages = dialogsReducer(store._state.dialogsPage.messages, action);
-        store._state.postPage.post = profileReducer(store._state.postPage.post, action)
+        // store._state.postPage.post = profileReducer(store._state.postPage.post, action)
         this.rerenderEntireTree()
     }
 }

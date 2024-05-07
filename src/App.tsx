@@ -1,19 +1,31 @@
-import React from 'react';
 import './App.css';
 import styled from 'styled-components';
 import Header from './components/Header/Header';
 import { Profile } from './components/Profile/Profile';
 import { Dialogs } from './components/Dialogs/Dialogs';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import { Navbar } from './components/Navbar/Navbar';
 import Users from './components/Users/Users';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDataTC } from './redux/auth-reducer';
+import { useEffect } from 'react';
+import Login from './components/Login/Login';
+import { AppStateType } from './redux/redux-store';
 
 
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setUserDataTC())
+  }, [dispatch])
+
+
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -21,12 +33,13 @@ function App() {
           <Header />
           <Navbar />
           <div>
-            <Route path='/messages' render={() => <Dialogs/>} />
-            <Route path='/profile' render={() => <Profile/>} />
-            <Route path='/users' component={Users} />
+            <Route path='/messages' render={() => <Dialogs />} />
+            <Route path='/profile' render={() => <Profile />} />
+            <Route path='/users/' component={Users} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
             <Route path='/settings' component={Settings} />
+            <Route path='/login' component={Login} />
           </div>
         </GridWrapper>
       </div>

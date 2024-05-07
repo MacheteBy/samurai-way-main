@@ -1,46 +1,82 @@
-import React from 'react';
 import styled from 'styled-components';
-import { dispatchType } from '../../../redux/state';
-import { followAC, unfollowAC } from '../../../redux/users-reducer';
+import { followAC, followTC, getUsersAC, getUsersTC, setCurrentPageAC, setIsFetchingAC, toggleFollowingInProgress, unfollowAC, unfollowTC } from '../../../redux/users-reducer';
+import { useEffect } from 'react';
+import { socialAPI } from '../../../api/social-api';
+import { AppStateType } from '../../../redux/redux-store';
+import { useSelector } from 'react-redux';
 
 type UserPropsType = {
-    postPage: any
+    usersPage: any
+    pageSize: any
+    totalCount: any
     dispatch: (action: any) => void;
 }
 
 const User = (props: UserPropsType) => {
+    let currentPage = useSelector<AppStateType, any>(state => state.usersPage.currentPage)
+    let followingInProgress = useSelector<AppStateType, any>(state => state.usersPage.followingInProgress)
+    
+    useEffect(() => {
+        props.dispatch(getUsersTC(currentPage, props.pageSize))
+    }, [currentPage])
 
-    const onClickFollow = (userId: any) => {
-        props.dispatch(followAC(userId))
+    const onClickFollow = (userId: number) => {
+        props.dispatch(followTC(userId))
     }
 
-    const onClickUnfollow = (userId: any) => {
-        props.dispatch(unfollowAC(userId))
+    const onClickUnfollow = (userId: number) => {
+        props.dispatch(unfollowTC(userId))
     }
 
-    const UsersList = props.postPage.users.map((el: any) => 
+
+    const UsersList = props.usersPage.map((el: any) =>
         <UsersWrapper key={el.id}>
             <UsersPreview>
                 <UsersImg src="https://cs14.pikabu.ru/post_img/big/2023/02/13/8/1676296367166243426.png" alt="img" />
-                {el.followed === true 
-                ? <ButtonSub onClick={() => onClickUnfollow(el.id)}>Follow</ButtonSub> 
-                : <ButtonSub onClick={() => onClickFollow(el.id)}>Unfollow</ButtonSub>}
+                {el.followed === true
+                    ? <ButtonSub onClick={() => onClickUnfollow(el.id)}
+                        disabled={followingInProgress.some((id: number) => id === el.id)}>Follow</ButtonSub>
+                    : <ButtonSub onClick={() => onClickFollow(el.id)}
+                        disabled={followingInProgress.some((id: number) => id === el.id)}>Unfollow</ButtonSub>}
             </UsersPreview>
             <UsersCard>
                 <UsersCardInfo>
-                    <h2>{el.fullName}</h2>
+                    <h2>{el.name}</h2>
                     <span>{el.status}</span>
                 </UsersCardInfo>
-                <UsersCardLocation>
+                {/* <UsersCardLocation>
                     <h3>{el.location.country}</h3>
                     <h4>{el.location.city}</h4>
-                </UsersCardLocation>
+                </UsersCardLocation> */}
             </UsersCard>
         </UsersWrapper>
     )
+
+
+    let pageCount = Math.ceil(25 / props.pageSize)
+    const PageList = []
+    for (let i = 1; i <= pageCount; i++) {
+        PageList.push(i)
+    }
+    const styleSpan = {
+        fontWeight: 'bold',
+        fontSize: '25px'
+    }
+
+    const onClickHandler = (p: number) => {
+        props.dispatch(setCurrentPageAC(p))
+    }
+
     return (
-        <>
-        {UsersList}
+        <>  <SpanWrapper>
+            {PageList.map((p) => {
+                return <div key={p}>{currentPage === p
+                    ? <SpanButton key={p} style={styleSpan} onClick={() => { onClickHandler(p) }}>{p}</SpanButton>
+                    : <SpanButton key={p} onClick={() => { onClickHandler(p) }}>{p}</SpanButton>}</div>
+            }
+            )}
+        </SpanWrapper>
+            {UsersList}
         </>
     );
 };
@@ -84,4 +120,14 @@ const UsersImg = styled.img`
 
 const ButtonSub = styled.button`
     
+`
+const SpanWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 10px 10px 0;
+`
+
+const SpanButton = styled.span`
+    font-size: 20px
 `
