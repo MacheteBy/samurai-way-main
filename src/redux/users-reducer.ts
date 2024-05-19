@@ -103,7 +103,10 @@ export const followTC = (userId: number) => (dispatch: Dispatch) => {
 export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
     dispatch(toggleFollowingInProgress(userId, true))
     socialAPI.toUnfollow(userId).then((res) => {
+        
         dispatch(unfollowAC(userId))
+        dispatch(toggleFollowingInProgress(userId, false))
+    }).finally(()=>{
         dispatch(toggleFollowingInProgress(userId, false))
     })
 }

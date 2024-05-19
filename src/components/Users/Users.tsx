@@ -3,14 +3,15 @@ import { AppStateType } from '../../redux/redux-store';
 import User from './User/User';
 import Preloader from '../common/Preloader/Preloader';
 import { Redirect } from 'react-router-dom';
+import { getUsersSuper, selectorGetUsers, selectorIsFetching, selectorIsInited, selectorPageSize, selectorTotalCount } from '../../redux/users-selectors';
 
 const Users = () => {
 
-    let usersPage = useSelector<AppStateType, any>(state => state.usersPage.users)
-    let pageSize = useSelector<AppStateType, any>(state => state.usersPage.pageSize)
-    let totalCount = useSelector<AppStateType, any>(state => state.usersPage.totalCount)
-    let isFetching = useSelector<AppStateType, any>(state => state.usersPage.isFetching)
-    let isInited = useSelector<AppStateType, any>(state => state.auth.isInited)
+    let usersPage = useSelector<AppStateType, any>(getUsersSuper)
+    let pageSize = useSelector<AppStateType, any>(selectorPageSize)
+    let totalCount = useSelector<AppStateType, any>(selectorTotalCount)
+    let isFetching = useSelector<AppStateType, any>(selectorIsFetching)
+    let isInited = useSelector<AppStateType, any>(selectorIsInited)
     let dispatch = useDispatch()
 
     if(isInited === false) {

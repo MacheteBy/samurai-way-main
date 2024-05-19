@@ -2,20 +2,20 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppStateType } from '../../redux/redux-store';
-import { NewPost } from './NewPost/NewPost';
 import { Post } from './Post/Post';
 import { AddPostActionCreator, ProfileType, getProfileTC, setStatusTC } from '../../redux/profile-reducer';
 import { Redirect } from 'react-router-dom';
 import ProfileStatus from './ProfileStatus';
 import NewPostForm, { NewPostFormType } from './NewPost/NewPostForm';
 import { reduxForm } from 'redux-form';
+import { selctorIsInited, selctorPostPage, selctorProfile, selctorStatus } from '../../redux/profile-selector';
 
 export const Profile = () => {
 
-  let postPage = useSelector<AppStateType, any>(state => state.postPage)
-  let profile = useSelector<AppStateType, ProfileType>(state => state.postPage.profile)
-  let isInited = useSelector<AppStateType, any>(state => state.auth.isInited)
-  let status = useSelector<AppStateType, any>(state => state.postPage.status)
+  let postPage = useSelector<AppStateType, any>(selctorPostPage)
+  let profile = useSelector<AppStateType, ProfileType>(selctorProfile)
+  let isInited = useSelector<AppStateType, any>(selctorIsInited)
+  let status = useSelector<AppStateType, any>(selctorStatus)
   let dispatch = useDispatch()
 
 

@@ -9,6 +9,7 @@ import { AppStateType } from '../../redux/redux-store';
 import { Redirect } from 'react-router-dom';
 import DialogsForm, { DialogsFormType } from './DialogsForm';
 import { reduxForm } from 'redux-form';
+import { selectorDialogsPage, selectorIsInited } from '../../redux/dialogs-selector';
 
 // type DialogsType = {
 //     dialogsPage: DialogsPageType
@@ -29,8 +30,8 @@ type MessagesType = {
 export const Dialogs = () => {
 
     // let [message, setMessage] = useState('')
-    let dialogsPage = useSelector<AppStateType, any>(state => state.dialogsPage)
-    let isInited = useSelector<AppStateType, any>(state => state.auth.isInited)
+    let dialogsPage = useSelector<AppStateType, any>(selectorDialogsPage)
+    let isInited = useSelector<AppStateType, any>(selectorIsInited)
     let dispatch = useDispatch()
 
     const dialogsElements = dialogsPage.dialogs.map(((user: DialogsType) => <DialogsItem key={user.id} id={user.id} name={user.name}/>))

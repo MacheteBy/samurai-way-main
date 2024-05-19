@@ -3,13 +3,14 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppStateType } from '../../redux/redux-store';
 import { initialStateType, setLogOutTC } from '../../redux/auth-reducer';
+import { selectorAuth } from '../../redux/auth-selector';
 
 
 
 const Header = () => {
 
 
-  const auth = useSelector<AppStateType, initialStateType>(state => state.auth)
+  const auth = useSelector<AppStateType, initialStateType>(selectorAuth)
   const dispatch = useDispatch()
 
 

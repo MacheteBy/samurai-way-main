@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { socialAPI } from '../../../api/social-api';
 import { AppStateType } from '../../../redux/redux-store';
 import { useSelector } from 'react-redux';
+import { selectorCurrentPage, selectorFollowingProgress } from '../../../redux/users-selectors';
+
 
 type UserPropsType = {
     usersPage: any
@@ -13,18 +15,20 @@ type UserPropsType = {
 }
 
 const User = (props: UserPropsType) => {
-    let currentPage = useSelector<AppStateType, any>(state => state.usersPage.currentPage)
-    let followingInProgress = useSelector<AppStateType, any>(state => state.usersPage.followingInProgress)
-    
+    let currentPage = useSelector<AppStateType, any>(selectorCurrentPage)
+    let followingInProgress = useSelector<AppStateType, any>(selectorFollowingProgress)
+    console.log(props.usersPage)
     useEffect(() => {
         props.dispatch(getUsersTC(currentPage, props.pageSize))
     }, [currentPage])
 
     const onClickFollow = (userId: number) => {
+       
         props.dispatch(followTC(userId))
     }
 
     const onClickUnfollow = (userId: number) => {
+      
         props.dispatch(unfollowTC(userId))
     }
 
@@ -33,11 +37,11 @@ const User = (props: UserPropsType) => {
         <UsersWrapper key={el.id}>
             <UsersPreview>
                 <UsersImg src="https://cs14.pikabu.ru/post_img/big/2023/02/13/8/1676296367166243426.png" alt="img" />
-                {el.followed === true
+                {el.followed
                     ? <ButtonSub onClick={() => onClickUnfollow(el.id)}
-                        disabled={followingInProgress.some((id: number) => id === el.id)}>Follow</ButtonSub>
+                        disabled={followingInProgress.some((id: number) => id === el.id)}>Unfollow</ButtonSub>
                     : <ButtonSub onClick={() => onClickFollow(el.id)}
-                        disabled={followingInProgress.some((id: number) => id === el.id)}>Unfollow</ButtonSub>}
+                        disabled={followingInProgress.some((id: number) => id === el.id)}>Follow</ButtonSub>}
             </UsersPreview>
             <UsersCard>
                 <UsersCardInfo>
