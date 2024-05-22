@@ -1,17 +1,17 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { memo } from 'react';
 import styled from 'styled-components';
-import { AppStateType } from '../../../redux/redux-store';
 import { PostPageType } from '../../../redux/state';
 
 type PostType = {
     postPage: PostPageType,
 }
 
-export const Post = (props: PostType) => {
+
+export const Post = React.memo((props: PostType) => {
+    console.log('Render post')
 
 
-    const PostElement = props.postPage.post.map(((el: any) => 
+    const PostElement =  props.postPage.post.map(((el: any) =>
         <PostsList key={el.id}>
             <PostImg src="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" alt="icon" />
             <PostText>{el.postText}</PostText>
@@ -21,9 +21,11 @@ export const Post = (props: PostType) => {
     return (
         <>
             {PostElement}
-        </>  
+        </>
     );
-};
+}, (prevProps, nextProps) => {
+    return JSON.stringify(prevProps.postPage) === JSON.stringify(nextProps.postPage);
+});
 
 
 const PostsList = styled.div`

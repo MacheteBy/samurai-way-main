@@ -26,6 +26,9 @@ const profileReducer = (state: any = initialState, action: ActionType) => {
         case "SET-STATUS": {
             return { ...state, status: action.status }
         }
+        case "DELETE-POST": {
+            return {...state, post: state.post.filter((p: any) => p.id !== action.postId)}
+        }
         default:
             return state
     }
@@ -34,6 +37,7 @@ const profileReducer = (state: any = initialState, action: ActionType) => {
 type ActionType = ReturnType<typeof AddPostActionCreator>
     | ReturnType<typeof getProfileAC>
     | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof deletePost>
 
 
 export type ProfileType = {
@@ -65,6 +69,7 @@ export const getProfileAC = (profile: any) => ({ type: 'GET-PROFILE', profile } 
 
 export const setStatusAC = (status: any) => ({ type: 'SET-STATUS', status } as const)
 
+export const deletePost = (postId: any) => ({type: 'DELETE-POST', postId} as const)
 
 //TC
 export const getProfileTC = () => (dispatch: Dispatch) => {

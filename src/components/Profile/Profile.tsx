@@ -53,6 +53,7 @@ export const Profile = () => {
       </MyInfo>
       <MyPosts>
         {/* <NewPost dispatch={dispatch} /> */}
+        
         <NewPostReduxForm onSubmit={onSubmit}/>
         <Post postPage={postPage} />
       </MyPosts>
