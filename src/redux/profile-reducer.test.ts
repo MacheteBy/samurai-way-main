@@ -34,3 +34,12 @@ it('after deleting length of messages should be decrement', () => {
     // expect
     expect(newState.post.length).toBe(2)
 })
+
+it('after deleting length shouldnt be decrement if id is incooorect', () => {
+    // start data
+    let action = deletePost(100)
+    // action
+    let newState = profileReducer(initialState, action)
+    // expect
+    expect(newState.post.length).toBe(3)
+})
