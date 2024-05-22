@@ -10,5 +10,5 @@ export const selectorCurrentPage = (state: AppStateType) => state.usersPage.curr
 export const selectorFollowingProgress = (state: AppStateType) => state.usersPage.followingInProgress
 
 export const getUsersSuper = createSelector(selectorGetUsers, (users) => {
-    return users.filter((u: any) => false)
+    return users.filter((u: any) => true)
 })

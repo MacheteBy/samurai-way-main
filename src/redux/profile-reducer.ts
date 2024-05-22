@@ -15,7 +15,6 @@ let initialState = {
 const profileReducer = (state: any = initialState, action: ActionType) => {
     switch (action.type) {
         case 'ADD-POST': {
-            console.log('ADD-POST')
             let newId = state.post.length + 1
             let newPost = { id: newId, postText: action.inputValue, like: 0 }
             return { ...state, post: [...state.post, newPost] }

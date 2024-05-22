@@ -56,7 +56,6 @@ export const Dialogs = () => {
     const DialogReduxForm = reduxForm<DialogsFormType>({form: 'message'})(DialogsForm)
 
     const onSubmit = (formData: DialogsFormType) => {
-        console.log(formData)
         dispatch(AddMessageActionCreator(formData.message))
 
     }

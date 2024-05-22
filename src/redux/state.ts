@@ -1,5 +1,5 @@
 import dialogsReducer, { AddMessageActionCreator } from "./dialogs-reducer"
-import profileReducer, { AddPostActionCreator } from "./profile-reducer"
+import { AddPostActionCreator } from "./profile-reducer"
 
 
 export type RootStateType = {
@@ -94,14 +94,12 @@ let store: StoryType = {
         return this._state
     },
     rerenderEntireTree() {
-        console.log('State changed')
     },
     // addPost(postMessage: string) {
     //     let newId = store._state.postPage.post.length + 1
     //     let newPost = { id: newId, postText: postMessage, like: 0 }
     //     store._state.postPage.post.push(newPost)
     //     store.rerenderEntireTree()
-    //     console.log(store)
     // },
     subscribe(callback: () => void) {
         store.rerenderEntireTree = callback

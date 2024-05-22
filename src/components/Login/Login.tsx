@@ -1,8 +1,7 @@
-import React from 'react';
 import LoginForm, { FormDataType } from './LoginForm';
 import { reduxForm } from 'redux-form';
 import { useDispatch } from 'react-redux';
-import { setLoginTC, setUserDataTC } from '../../redux/auth-reducer';
+import { setLoginTC } from '../../redux/auth-reducer';
 
 const Login = () => {
 
@@ -10,7 +9,6 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
         dispatch(setLoginTC(formData))
     } 
 

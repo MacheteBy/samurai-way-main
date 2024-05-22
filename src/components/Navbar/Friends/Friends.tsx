@@ -1,8 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppStateType } from '../../../redux/redux-store';
-import { VavbarFriendsType } from '../../../redux/state';
 import { Friend } from './Friend/Friend';
 
 

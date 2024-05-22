@@ -15,7 +15,6 @@ const Header = () => {
 
 
   const onClickHandler = () => {
-    console.log('logOUT')
     dispatch(setLogOutTC())
   }
 

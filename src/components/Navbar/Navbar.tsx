@@ -1,7 +1,4 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-import { VavbarFriendsType } from '../../redux/state';
 import { Friends } from './Friends/Friends';
 import { S } from './Navbar.module'
 

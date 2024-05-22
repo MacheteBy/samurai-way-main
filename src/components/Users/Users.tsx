@@ -3,7 +3,7 @@ import { AppStateType } from '../../redux/redux-store';
 import User from './User/User';
 import Preloader from '../common/Preloader/Preloader';
 import { Redirect } from 'react-router-dom';
-import { getUsersSuper, selectorGetUsers, selectorIsFetching, selectorIsInited, selectorPageSize, selectorTotalCount } from '../../redux/users-selectors';
+import { getUsersSuper, selectorIsFetching, selectorIsInited, selectorPageSize, selectorTotalCount } from '../../redux/users-selectors';
 
 const Users = () => {
 

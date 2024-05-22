@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { followAC, followTC, getUsersAC, getUsersTC, setCurrentPageAC, setIsFetchingAC, toggleFollowingInProgress, unfollowAC, unfollowTC } from '../../../redux/users-reducer';
+import { followTC, getUsersTC, setCurrentPageAC, unfollowTC } from '../../../redux/users-reducer';
 import { useEffect } from 'react';
-import { socialAPI } from '../../../api/social-api';
 import { AppStateType } from '../../../redux/redux-store';
 import { useSelector } from 'react-redux';
 import { selectorCurrentPage, selectorFollowingProgress } from '../../../redux/users-selectors';
@@ -17,21 +16,17 @@ type UserPropsType = {
 const User = (props: UserPropsType) => {
     let currentPage = useSelector<AppStateType, any>(selectorCurrentPage)
     let followingInProgress = useSelector<AppStateType, any>(selectorFollowingProgress)
-    console.log(props.usersPage)
     useEffect(() => {
         props.dispatch(getUsersTC(currentPage, props.pageSize))
     }, [currentPage])
 
     const onClickFollow = (userId: number) => {
-       
         props.dispatch(followTC(userId))
     }
 
     const onClickUnfollow = (userId: number) => {
-      
         props.dispatch(unfollowTC(userId))
     }
-
 
     const UsersList = props.usersPage.map((el: any) =>
         <UsersWrapper key={el.id}>

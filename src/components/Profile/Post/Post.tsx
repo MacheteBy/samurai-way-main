@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { PostPageType } from '../../../redux/state';
 
@@ -8,7 +8,6 @@ type PostType = {
 
 
 export const Post = React.memo((props: PostType) => {
-    console.log('Render post')
 
 
     const PostElement =  props.postPage.post.map(((el: any) =>

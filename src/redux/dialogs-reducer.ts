@@ -1,4 +1,3 @@
-import { Messages } from "../components/Dialogs/Messages/Messages"
 import { dispatchType } from "./state"
 
 export const addMessage = 'ADD-MESSAGE'
@@ -22,7 +21,6 @@ let initialState = {
 export const dialogsReducer = (state: any = initialState, action: dispatchType) => {
     switch (action.type) {
         case addMessage: {
-            console.log(addMessage)
             let newId = state.messages.length + 1
             let newMessage = { id: newId, message: action.message }
             return { ...state, messages: [...state.messages, newMessage] }
