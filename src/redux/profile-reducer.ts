@@ -31,7 +31,10 @@ const profileReducer = (state: any = initialState, action: ActionType) => {
             return { ...state, post: state.post.filter((p: any) => p.id !== action.postId) }
         }
         case "ADD-AVATAR": {
-            return { ...state, profile: {...state.profile, photos: action.image} }
+            return { ...state, profile: { ...state.profile, photos: action.image } }
+        }
+        case "CHANGE-PROFILE": {
+            return { ...state, profile: action.dataProfile }
         }
         default:
             return state
@@ -43,6 +46,7 @@ type ActionType = ReturnType<typeof AddPostActionCreator>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof deletePost>
     | ReturnType<typeof addAvatarAC>
+    | ReturnType<typeof changeProfileAC>
 
 
 export type ProfileType = {
@@ -66,6 +70,7 @@ export type ProfileType = {
     };
 };
 
+
 //AC
 export const AddPostActionCreator = (inputValue: string) =>
     ({ type: 'ADD-POST', inputValue: inputValue } as const)
@@ -77,6 +82,8 @@ export const setStatusAC = (status: any) => ({ type: 'SET-STATUS', status } as c
 export const deletePost = (postId: any) => ({ type: 'DELETE-POST', postId } as const)
 
 export const addAvatarAC = (image: any) => ({ type: 'ADD-AVATAR', image } as const)
+
+export const changeProfileAC = (dataProfile: any) => ({ type: 'CHANGE-PROFILE', dataProfile } as const)
 
 //TC
 export const getProfileTC = () => (dispatch: Dispatch) => {
@@ -102,6 +109,13 @@ export const updateStatusTC = (status: any) => (dispatch: Dispatch) => {
 export const updateAddAvatarTC = (file: File) => (dispatch: Dispatch) => {
     socialAPI.addAvatar(file).then((res) => {
         dispatch(addAvatarAC(res.data.data.photos))
+    })
+}
+
+export const changeProfileTC = (dataProfile: any) => (dispatch: Dispatch) => {
+    socialAPI.changeProfile(dataProfile).then((res) => {
+        console.log(res)
+        // dispatch(res.data)
     })
 }
 

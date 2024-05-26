@@ -1,9 +1,9 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppStateType } from '../../redux/redux-store';
 import { Post } from './Post/Post';
-import { AddPostActionCreator, ProfileType, getProfileTC, setStatusTC, updateAddAvatarTC } from '../../redux/profile-reducer';
+import { AddPostActionCreator, ProfileType, changeProfileTC, getProfileTC, setStatusTC, updateAddAvatarTC } from '../../redux/profile-reducer';
 import { Redirect } from 'react-router-dom';
 import ProfileStatus from './ProfileStatus';
 import NewPostForm, { NewPostFormType } from './NewPost/NewPostForm';
@@ -17,7 +17,7 @@ export const Profile = () => {
   let isInited = useSelector<AppStateType, any>(selctorIsInited)
   let status = useSelector<AppStateType, any>(selctorStatus)
   let dispatch = useDispatch()
-
+  const [changeState, SetChangeState] = useState(false)
 
   useEffect(() => {
     dispatch(getProfileTC())
@@ -34,9 +34,31 @@ export const Profile = () => {
     dispatch(AddPostActionCreator(formDate.message))
   }
 
-  // const onChangeHandler = (file: any) => {
-  //     dispatch(updateAddAvatarTC(file))
-  // }
+  const onChangeHandler = () => {
+    SetChangeState(!changeState)
+  }
+
+  const onChangeHandlerSave = () => {
+    const test = {
+      "aboutMe": 'Machete coder',
+      "contacts": {
+          "facebook": null,
+          "website": null,
+          "vk": null,
+          "twitter": null,
+          "instagram": null,
+          "youtube": null,
+          "github": null,
+          "mainLink": null
+      },
+      "lookingForAJob": false,
+      "lookingForAJobDescription": 'yes',
+      "fullName": "VMarchenkov",
+      "userId": 30596,
+  }
+    dispatch(changeProfileTC(test))
+    SetChangeState(!changeState)
+  }
 
   const onChangeInputFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.length) {
@@ -44,7 +66,7 @@ export const Profile = () => {
       console.log(e.currentTarget.files[0])
     }
   }
-console.log(profile.photos.large)
+  console.log(profile)
   return (
     <MainStyled>
       <MainImages></MainImages>
@@ -58,11 +80,21 @@ console.log(profile.photos.large)
                 ? <PhotoAvatar src={profile.photos.large} />
                 : <PhotoAvatar src='https://zornet.ru/_fr/19/4551480.png' />}</span>
               <input type="file" onChange={onChangeInputFile} />
-              {/* <ButtonAva onClick={onChangeHandler}>add avatar</ButtonAva> */}
-              <span>Name: {profile.fullName}</span>
-              <span>Statys: {profile.lookingForAJobDescription}</span>
-              <span>Web Site VK: {profile.contacts.vk}</span>
-              <span>Web Site Other: {profile.contacts.github}</span>
+              <ButtonChange onClick={onChangeHandler}>change info</ButtonChange>
+              {changeState
+                ? <>
+                  <p>Web Site VK:</p><input type="text" name='vk' />
+                  <p>Web Site Other:</p><input type="text" name='other' />
+                  <button onClick={onChangeHandlerSave}>save</button>
+                </>
+                : <>
+                  <span>Name: {profile.fullName}</span>
+                  <span>Statys: {profile.lookingForAJobDescription}</span>
+                  <span>Web Site VK: {profile.contacts.vk}</span>
+                  <span>Web Site Other: {profile.contacts.github}</span>
+                </>
+              }
+
             </>
             : ''}
         </MyInfoBlock>
@@ -112,7 +144,7 @@ const MyInfoBlock = styled.div`
 const MyPosts = styled.div`
   
 `
-const ButtonAva = styled.button`
-  width: 80px;
+const ButtonChange = styled.button`
+  width: 100px;
   height: 50px;
 `
