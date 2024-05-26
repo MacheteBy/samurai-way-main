@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppStateType } from '../../redux/redux-store';
 import { Post } from './Post/Post';
-import { AddPostActionCreator, ProfileType, getProfileTC, setStatusTC } from '../../redux/profile-reducer';
+import { AddPostActionCreator, ProfileType, getProfileTC, setStatusTC, updateAddAvatarTC } from '../../redux/profile-reducer';
 import { Redirect } from 'react-router-dom';
 import ProfileStatus from './ProfileStatus';
 import NewPostForm, { NewPostFormType } from './NewPost/NewPostForm';
@@ -28,12 +28,23 @@ export const Profile = () => {
     return <Redirect to={'/login'} />
   }
 
-  const NewPostReduxForm = reduxForm<NewPostFormType>({form: 'addMessage'})(NewPostForm)
+  const NewPostReduxForm = reduxForm<NewPostFormType>({ form: 'addMessage' })(NewPostForm)
 
   const onSubmit = (formDate: NewPostFormType) => {
     dispatch(AddPostActionCreator(formDate.message))
   }
 
+  // const onChangeHandler = (file: any) => {
+  //     dispatch(updateAddAvatarTC(file))
+  // }
+
+  const onChangeInputFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.length) {
+      dispatch(updateAddAvatarTC(e.currentTarget.files[0]))
+      console.log(e.currentTarget.files[0])
+    }
+  }
+console.log(profile.photos.large)
   return (
     <MainStyled>
       <MainImages></MainImages>
@@ -43,6 +54,11 @@ export const Profile = () => {
         <MyInfoBlock>
           {profile
             ? <>
+              <span>Avatar: {profile.photos.large !== null
+                ? <PhotoAvatar src={profile.photos.large} />
+                : <PhotoAvatar src='https://zornet.ru/_fr/19/4551480.png' />}</span>
+              <input type="file" onChange={onChangeInputFile} />
+              {/* <ButtonAva onClick={onChangeHandler}>add avatar</ButtonAva> */}
               <span>Name: {profile.fullName}</span>
               <span>Statys: {profile.lookingForAJobDescription}</span>
               <span>Web Site VK: {profile.contacts.vk}</span>
@@ -53,8 +69,8 @@ export const Profile = () => {
       </MyInfo>
       <MyPosts>
         {/* <NewPost dispatch={dispatch} /> */}
-        
-        <NewPostReduxForm onSubmit={onSubmit}/>
+
+        <NewPostReduxForm onSubmit={onSubmit} />
         <Post postPage={postPage} />
       </MyPosts>
     </MainStyled>
@@ -80,6 +96,10 @@ const Photo = styled.img`
   height: 300px;
   width: 90vw;
 `
+const PhotoAvatar = styled.img`
+  height: 50px;
+  width: 50px;
+`
 
 const MyInfoBlock = styled.div`
   display: flex;
@@ -91,4 +111,8 @@ const MyInfoBlock = styled.div`
 
 const MyPosts = styled.div`
   
+`
+const ButtonAva = styled.button`
+  width: 80px;
+  height: 50px;
 `

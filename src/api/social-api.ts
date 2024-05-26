@@ -1,5 +1,4 @@
 import axios from "axios";
-import { FormDataType } from "../components/Login/LoginForm";
 
 
 const instance = axios.create({
@@ -31,12 +30,21 @@ export const socialAPI = {
         return instance.get(`/profile/status/${userId}`)
     },
     updateStatus(status: string) {
-        return instance.put(`/profile/status`, {status})
+        return instance.put(`/profile/status`, { status })
     },
     login(email: string, password: string, rememberMe: boolean) {
-        return instance.post(`/auth/login`, {email, password, rememberMe})
+        return instance.post(`/auth/login`, { email, password, rememberMe })
     },
     logOut() {
         return instance.delete(`/auth/login`)
+    },
+    addAvatar(file: File) {
+        const formData: FormData = new FormData()
+        formData.append('image', file)
+        return instance.put(`/profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
