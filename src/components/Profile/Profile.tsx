@@ -9,6 +9,7 @@ import ProfileStatus from './ProfileStatus';
 import NewPostForm, { NewPostFormType } from './NewPost/NewPostForm';
 import { reduxForm } from 'redux-form';
 import { selctorIsInited, selctorPostPage, selctorProfile, selctorStatus } from '../../redux/profile-selector';
+import { Field, Form, Formik } from 'formik';
 
 export const Profile = () => {
 
@@ -38,35 +39,37 @@ export const Profile = () => {
     SetChangeState(!changeState)
   }
 
-  const onChangeHandlerSave = () => {
+  const onChangeHandlerSave = (formData: any) => {
     const test = {
       "aboutMe": 'Machete coder',
-      "contacts": {
-          "facebook": null,
-          "website": null,
-          "vk": null,
-          "twitter": null,
-          "instagram": null,
-          "youtube": null,
-          "github": null,
-          "mainLink": null
-      },
+      // "contacts": {
+      //     "facebook": null,
+      //     "website": null,
+      //     "vk": null,
+      //     "twitter": null,
+      //     "instagram": null,
+      //     "youtube": null,
+      //     "github": null,
+      //     "mainLink": null
+      // },
       "lookingForAJob": false,
-      "lookingForAJobDescription": 'yes',
-      "fullName": "VMarchenkov",
+      "lookingForAJobDescription": 'no',
+      "fullName": "Machete1",
       "userId": 30596,
-  }
-    dispatch(changeProfileTC(test))
+    }
+
+    console.log(formData)
+    // dispatch(changeProfileTC(test))
     SetChangeState(!changeState)
   }
 
   const onChangeInputFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.length) {
       dispatch(updateAddAvatarTC(e.currentTarget.files[0]))
-      console.log(e.currentTarget.files[0])
     }
   }
-  console.log(profile)
+
+
   return (
     <MainStyled>
       <MainImages></MainImages>
@@ -83,15 +86,29 @@ export const Profile = () => {
               <ButtonChange onClick={onChangeHandler}>change info</ButtonChange>
               {changeState
                 ? <>
-                  <p>Web Site VK:</p><input type="text" name='vk' />
+                  <Formik initialValues={Object} onSubmit={(value) => onChangeHandlerSave(value)}>
+                    <Form>
+                      <label htmlFor="fullName">Full name:</label><Field type="text" name='fullName' /><br />
+                      <label htmlFor="aboutMe">About me:</label><Field type="text" name='aboutMe' /><br />
+                      <label htmlFor="lookingForAJob">Looking for a Job:</label><Field type="text" name='lookingForAJob' /><br />
+                      <label htmlFor="lookingForAJobDescription">looking for a job description:</label><Field type="text" name='lookingForAJobDescription' /><br />
+                      <button>Save</button>
+                    </Form>
+                  </Formik>
+
+                  {/* <p>Web Site VK:</p><input type="text" name='vk' />
                   <p>Web Site Other:</p><input type="text" name='other' />
-                  <button onClick={onChangeHandlerSave}>save</button>
+                  <button onClick={onChangeHandlerSave}>save</button> */}
                 </>
                 : <>
-                  <span>Name: {profile.fullName}</span>
+                  <span>Full name: {profile.fullName}</span>
+                  <span>About me: {profile.aboutMe}</span>
+                  <span>Looking for a Job: {profile.lookingForAJob}</span>
+                  <span>looking for a job description: {profile.lookingForAJobDescription}</span>
+                  {/* <span>Name: {profile.fullName}</span>
                   <span>Statys: {profile.lookingForAJobDescription}</span>
                   <span>Web Site VK: {profile.contacts.vk}</span>
-                  <span>Web Site Other: {profile.contacts.github}</span>
+                  <span>Web Site Other: {profile.contacts.github}</span> */}
                 </>
               }
 
