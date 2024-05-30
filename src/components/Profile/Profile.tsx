@@ -39,9 +39,9 @@ export const Profile = () => {
     SetChangeState(!changeState)
   }
 
-  const onChangeHandlerSave = (formData: any) => {
-    const test = {
-      "aboutMe": 'Machete coder',
+  const onChangeHandlerSave = (profile: any) => {
+
+      // "aboutMe": 'Machete coder',
       // "contacts": {
       //     "facebook": null,
       //     "website": null,
@@ -52,14 +52,12 @@ export const Profile = () => {
       //     "github": null,
       //     "mainLink": null
       // },
-      "lookingForAJob": false,
-      "lookingForAJobDescription": 'no',
-      "fullName": "Machete1",
-      "userId": 30596,
-    }
-
-    console.log(formData)
-    // dispatch(changeProfileTC(test))
+      // "lookingForAJob": false,
+      // "lookingForAJobDescription": 'no',
+      // "fullName": "Machete1",
+      // "userId": 30596,
+    console.log(profile)
+    dispatch(changeProfileTC(profile))
     SetChangeState(!changeState)
   }
 
@@ -86,13 +84,13 @@ export const Profile = () => {
               <ButtonChange onClick={onChangeHandler}>change info</ButtonChange>
               {changeState
                 ? <>
-                  <Formik initialValues={Object} onSubmit={(value) => onChangeHandlerSave(value)}>
+                  <Formik initialValues={Object} onSubmit={(profile) => onChangeHandlerSave(profile)}>
                     <Form>
-                      <label htmlFor="fullName">Full name:</label><Field type="text" name='fullName' /><br />
-                      <label htmlFor="aboutMe">About me:</label><Field type="text" name='aboutMe' /><br />
-                      <label htmlFor="lookingForAJob">Looking for a Job:</label><Field type="text" name='lookingForAJob' /><br />
-                      <label htmlFor="lookingForAJobDescription">looking for a job description:</label><Field type="text" name='lookingForAJobDescription' /><br />
-                      <button>Save</button>
+                      <label htmlFor="fullName">Full name:</label><Field component={'input'} name={'fullName'}/><br />
+                      <label htmlFor="aboutMe">About me:</label><Field component={'input'} name={'aboutMe'} /><br />
+                      <label htmlFor="lookingForAJob">Looking for a Job:</label><Field component={'select'}name={'lookingForAJob'}><option value='true'>yes</option><option value='false'>no</option></Field><br />
+                      <label htmlFor="lookingForAJobDescription">looking for a job description:</label><Field component={'input'} name={'lookingForAJobDescription'} /><br />
+                      <button type='submit'>Save</button>
                     </Form>
                   </Formik>
 

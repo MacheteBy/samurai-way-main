@@ -48,7 +48,7 @@ export const socialAPI = {
             }
         })
     },
-    changeProfile(dataProfile: any) {
-        return instance.put(`/profile`, dataProfile)
+    changeProfile(profile: any) {
+        return instance.put(`/profile`, profile)
     }
 }

@@ -1,5 +1,7 @@
 import { Dispatch } from "redux"
 import { socialAPI } from "../api/social-api"
+import { ThunkDispatch } from "redux-thunk"
+import { AppStateType } from "./redux-store"
 
 
 
@@ -34,7 +36,7 @@ const profileReducer = (state: any = initialState, action: ActionType) => {
             return { ...state, profile: { ...state.profile, photos: action.image } }
         }
         case "CHANGE-PROFILE": {
-            return { ...state, profile: action.dataProfile }
+            return { ...state, profile: { ...state.profile, profile: action.dataProfile } }
         }
         default:
             return state
@@ -89,6 +91,7 @@ export const changeProfileAC = (dataProfile: any) => ({ type: 'CHANGE-PROFILE', 
 //TC
 export const getProfileTC = () => (dispatch: Dispatch) => {
     socialAPI.getProfile(30596).then((res) => {
+        console.log(res.data)
         dispatch(getProfileAC(res.data))
     })
 }
@@ -113,11 +116,11 @@ export const updateAddAvatarTC = (file: File) => (dispatch: Dispatch) => {
     })
 }
 
-export const changeProfileTC = (dataProfile: any) => (dispatch: Dispatch) => {
-    socialAPI.changeProfile(dataProfile).then((res) => {
-        console.log(res)
-        // dispatch(res.data)
-    })
+export const changeProfileTC = (profile: Object) => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+    const res = await socialAPI.changeProfile(profile)
+    if (res.data.resultCode === 0) {
+        dispatch(getProfileTC())
+    }
 }
 
 export default profileReducer;
